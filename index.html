@@ -12,34 +12,84 @@
 	
 	<style rel="stylesheet">
 		html {overflow-y:auto;}
+		body{font-size:14px;}
 		.topbar{position:static;}
-		.container{width:500px;}
+		.container{width:460px;border:1px solid #000;}
+		form .input{margin-left:110px;}
+		fieldset legend{padding-left:110px;}
+		.actions{padding: 17px 20px 18px 110px;margin-bottom:0;}
+		
+		
+		.view-word{color:#000;}
+			.view-word .item{padding:5px 20px;}
+			.view-word .item:hover{background-color:rgba(204,204,204,0.1);}
+			.view-word .word{font-weight:700px;}
+			.view-word .read{width:22px;height:22px;display:inline-block;background:url(images/buttons6.png) -124px -4px no-repeat;opacity:0.6;border:1px solid transparent;margin-bottom:-6px;margin-left:10px;cursor:default;}
+			.view-word .read:hover{border:1px solid #ccc;border-radius:2px;background-color:-webkit-linear-gradient(top,#f8f8f8,#f1f1f1)}
+			.view-word .read:active{border-color:#333;cursor:default;}
+			.view-word .dec{margin-top:5px;}
+			.view-word .help-block{display:none;}
+			
 	</style>
 </head>
 <body>
-	<div class="topbar">
-      <div class="topbar-inner">
-        <div class="container">
-          <a class="brand" href="#">Bootstrap</a>
-          <ul class="nav">
-            <li class="active"><a href="#overview">Overview</a></li>
-            <li class=""><a href="#about">About</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-	<div class="row">
-		<div class="span8">
-			hello world<br/>
-		hello world<br/>
-		hello world<br/>
-		hello world<br/>
-		hello world<br/>
-		hello world<br/>
-		hello world<br/>
-		hello world<br/>
+	<div class="container">
+		<div class="">
+			<ul class="tabs">
+				<li><a href="#">Add</a></li>
+				<li class="active"><a href="#">View</a></li>
+				<li><a href="#">Settings</a></li>
+				<li><a href="#">Contact</a></li>
+			  </ul>
 		</div>
-		
+		<div class="row">
+			<div class="span8">
+				<div id="addPage" style="display:none;" >
+					<form>
+						<fieldset>
+							<legend>Add Word</legend>
+							<div class="clearfix">
+								<label for="xlInput" class="span2" >Word</label>
+								<div class="input">
+								  <input class="span5" id="xlInput" name="xlInput" size="30" type="text">
+								</div>
+							</div>
+							<div class="clearfix">
+							<label for="textarea2" class="span2"  >Description</label>
+							<div class="input">
+							  <textarea class="span5" id="textarea2" name="textarea2" rows="3"></textarea>
+							</div>
+						  </div>
+						  <div class="actions">
+							<input type="submit" class="btn primary" value="Add and Save">
+						  </div>
+					  </fieldset>
+					</form>
+				</div>
+				
+				<div id="viewPage" class="view-word">
+					<div class="item">
+						<strong class="word">Variables <span title="朗读" class="read"></span></strong>
+						<p class="dec">Variables in Less are perfect for maintaining and updating your CSS headache free. When you want to change a color value or a frequently used value, update it in one spot and you��re set.</p>
+						<p class="help-block">12:12:12</p>
+					</div>
+					
+					<div class="item">
+						<strong class="word">Variables <span title="朗读" class="read"></span></strong>
+						<p class="dec"></p>
+						<p class="help-block">12:12:12</p>
+					</div>
+					
+					<div class="item">
+						<strong class="word">Variables <span title="朗读" class="read"></span></strong>
+						<p class="dec">Variables in Less are perfect for maintaining and updating your CSS headache free. When you want to change a color value or a frequently used value, update it in one spot and youore set.</p>
+						<p class="help-block">12:12:12</p>
+					</div>
+					
+				</div>
+			</div>
+
+		</div>
 	</div>
 </body>
 </html>
