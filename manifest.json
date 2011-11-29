@@ -1,0 +1,20 @@
+﻿{
+	"name":"Chrome Expand",
+	"version":"1.0",
+	"description":"Chrome Expand",
+	//"background_page":"background.html",
+	"browser_action":{
+				"default_icon": "favicon.ico",
+				"popup":"index.html",
+				"default_title":"Chrome Expand"
+	},
+	"permissions":["cookies","tabs","http://*.daxuecheng.com/"]//,
+	//"options_page":"html/options_page.html"
+}
+
+/*
+	description
+	使用localStorage 对象来保存全局的一些设置 非常好的选择 
+	localStorage.a = 1;
+	chrome.cookies.get({url:'daxuecheng.com',name:'_uid'},function(a){console.log(a)});
+*/
