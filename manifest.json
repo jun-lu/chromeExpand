@@ -8,7 +8,7 @@
 				"popup":"index.html",
 				"default_title":"Chrome Expand"
 	},
-	"permissions":["cookies","tabs","http://*.daxuecheng.com/"]//,
+	"permissions":["cookies","tabs","http://192.168.1.101:9030/"]//,
 	//"options_page":"html/options_page.html"
 }
 

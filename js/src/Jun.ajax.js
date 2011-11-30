@@ -35,7 +35,7 @@
                 json.success && json.success(dataString);
             }
         }
-        
+        var arr = [];
 		for( var e in json.data ){
 			arr.push(e + '=' + encodeURIComponent(json.data[e]));
 		}

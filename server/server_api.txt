@@ -1,0 +1,77 @@
+
+http://www.cnblogs.com/kunhony/archive/2006/06/16/427305.html 错误码表
+
+
+add
+	url:add.php
+	method:post
+	cookie: userMD5
+	parameter:
+		word: ""//关键词
+		dec:""//描述
+
+	return {
+		code:0,1,2,3,4//错误定义 0为正确
+		msg:""//错误描述
+		result:{}||[]//结果
+	}
+
+edit
+	url:edit.php
+	method:post,
+	cookie: userMD5
+	parameter:
+		day:""//关键词所在天
+		index:""//第几个
+		word: ""//关键词
+		dec:""//描述
+
+	return {
+		code:0,1,2,3,4//错误定义 0为正确
+		msg:""//错误描述
+		result:{}||[]//结果
+	}
+
+
+
+selected
+	url:select.php
+	method:get,
+	cookie:urserMD5
+	parameter:
+		day:""//读取某一天的
+
+
+	return {
+		code:0,1,2,3,4//错误定义 0为正确
+		msg:""//错误描述
+		result:{}||[]//结果
+	}
+	
+create_user
+	url:create.php
+	method:post
+	parameter:
+		email:idche@qq.com
+		pwd:l123456
+
+	return {
+		code:int//200创建成功 401用户名重复
+		md5://用户名加密以后的MD5
+	}
+	
+	//程序 创建以用户名MD5加密的文件夹，并在文件夹下创建config.json  格式参考config.json
+
+login	
+	url:login.php
+	method:post
+	parameter:
+		email:idche@qq.com
+		pwd:l123456
+
+	return {
+		code:int//200登录成功 404用户名错误 402 密码错误
+		md5://用户名加密以后的MD5
+	}
+	
+	//程序 创建以用户名MD5加密的文件夹，并在文件夹下创建config.json  格式参考config.json
