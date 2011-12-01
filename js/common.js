@@ -4,7 +4,7 @@ var config = {
 };
 
 var Common = {
-	item:'<div class="item" tabindex="1">\
+	item:'<div class="item" tabindex="1" data-word="<%=word%>" >\
 		<strong class="word"><%=word%> <span title="'+ TipData["1003"] +'" class="read"  data-word="<%=word%>" ></span></strong>\
 		<p class="des"><%=des%></p>\
 		<p class="help-block"><%=time%></p>\
@@ -48,6 +48,9 @@ var Common = {
 	showTip:function(data){
 		var msg = TipData[data.code] || TipData["1000"]+data.code;
 		this.tip(msg);
+	},
+	read:function(word){
+		$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
 	},
 	get:function(url, data, success){
 		Common.tip(TipData["1001"], 0);

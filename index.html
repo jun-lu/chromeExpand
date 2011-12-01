@@ -67,9 +67,23 @@
 	<script>
 		
 		
-		$('#viewList .read').live('click', function(){
-			var word = $(this).attr("data-word");
-			$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
+		$('#viewList .read').live('click', function(){//朗读
+			var word = $(this)[0].dataset.word;
+			Common.read(word);
+			//$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
+		});
+		
+		$('#viewList .item').live('keyup', function(event){
+			if(event.keyCode == 76){//L 键
+				//var word = $(this).dataset.word;
+				var readdom = $(this).find(".read");
+				var word = readdom[0].dataset.word;
+				readdom.addClass("active");
+				setTimeout(function(){
+					readdom.removeClass("active");
+				},500);
+				Common.read(word);
+			}
 		});
 		
 		$('#keyword').blur(function(){
