@@ -1,9 +1,10 @@
 var config = {
-	host:"http://192.168.1.101:9030/"
+	//host:"http://192.168.1.101:9030/"
+	host:"http://localhost/chrome/"
 };
 
 var Common = {
-	item:'<div class="item">\
+	item:'<div class="item" tabindex="1">\
 		<strong class="word"><%=word%> <span title="'+ TipData["1003"] +'" class="read"  data-word="<%=word%>" ></span></strong>\
 		<p class="des"><%=des%></p>\
 		<p class="help-block"><%=time%></p>\

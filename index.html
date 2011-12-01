@@ -65,19 +65,51 @@
 	
 	
 	<script>
+		
+		
 		$('#viewList .read').live('click', function(){
 			var word = $(this).attr("data-word");
 			$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
+		});
+		
+		$('#keyword').blur(function(){
+			var word = $(this).val();
+			if(word){
+				Common.setItem("tem_word", word);
+			}else{
+				Common.removeItem("tem_word");
+			}
+		});
+		
+		$('#description').blur(function(){
+			var des = $(this).val();
+			if(des){
+				Common.setItem("tem_des", des);
+			}else{
+				Common.removeItem("tem_des");
+			}
 		});
 		
 		Common.page = {
 			pageIds:"#addPage,#viewPage",
 			menuIds:"#showAddPage,#showViewPage",
 			addPage:function(){
+				var word = Common.getItem("tem_word");
+				var des = Common.getItem("tem_des");
+				
+				if(word){
+					$('#keyword').val(word);
+				}
+				
+				if(des){
+					$('#description').val(des);
+				}
+				
 				$(this.pageIds).addClass("hide");
 				$("#addPage").removeClass("hide");
 				$(Common.page.menuIds).removeClass("active");
 				$("#showAddPage").addClass("active");
+				$('#keyword').focus();
 			},
 			viewPage:function(dayTime){
 
@@ -113,7 +145,7 @@
 				}
 				$('#viewList').html(html);
 			},
-			regEvent:function(){
+			regEvent:function(){//导航按钮
 				$(this.menuIds).each(function(i){
 					var i = i;
 					$(this).click(function(){
@@ -132,7 +164,7 @@
 					chrome.tabs.create({url:'temp/help.html'});
 				});
 			},
-			addReg:function(){
+			addReg:function(){ // 添加form
 				$('#addAndSaveForm').submit(function(){
 					var word = $('#keyword').val();
 					var des = $('#description').val();
@@ -143,6 +175,10 @@
 								var bg = Common.getBackground();
 								var userData = bg.UserData;
 								var dayTime = Common.getDayTime();
+								
+								Common.removeItem("tem_word");//删除临时存储
+								Common.removeItem("tem_des");//删除临时存储
+								
 								if(userData && userData[dayTime]){
 									console.log(data.result);
 									Common.addData([data.result], dayTime);
@@ -158,6 +194,7 @@
 		};
 		Common.page.regEvent();
 		Common.page.addReg();
+		Common.page.addPage();
 	</script>
 </body>
 </html>
