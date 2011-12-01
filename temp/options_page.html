@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
         <meta charset="UTF-8">
-        <title>Daxuecheng Pulse Options</title>
+        <title>Login</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		<style rel="stylesheet">
 				html {overflow-y:auto;}
@@ -34,8 +34,9 @@
 				.pulse-btn{margin-top:-5px;}
 		</style>
 		<script src="../js/jQuery.js"></script>
+		<script src="../js/tipdata.js"></script>
 		<script src="../js/common.js"></script>
-		<script src="../js/error.js"></script>
+		
 		
     </head>
     <body id="options" >
@@ -44,7 +45,7 @@
 		</div>
         <div id="wrapper">
             <header>
-                <h1>Setting</h1>
+                <h1>Login</h1> <a href="help.html">help?</a>
             </header>
             <section>
             	<div id="loadingWrap" >
@@ -54,17 +55,17 @@
 						   <div class="clearfix">
 								<label for="email" class="span2">Email</label>
 								<div class="input">
-								  <input class="span3" id="email" name="email" size="30" type="text">
+								  <input class="span3" id="email" name="email" size="30" type="text" tabindex="1"  > <a href="signup.html">Sign Up</a>
 								</div>
 							</div>
 							<div class="clearfix">
 								<label for="PWD" class="span2">PWD</label>
 								<div class="input">
-								  <input class="span3" id="PWD" name="PWD" size="30" type="password">
+								  <input class="span3" id="PWD" name="PWD" size="30" type="password" tabindex="2"  >
 								</div>
 							</div>
 							<div class="actions">
-									<input type="submit" class="btn primary" value="Login" id="loginBtn" >
+									<input type="submit" class="btn primary" value="Login" id="loginBtn" tabindex="3"  >
 							</div>
 						</fieldset>
 					</form>
@@ -76,17 +77,17 @@
 						   <div class="clearfix">
 								<label for="email2" class="span2">Email</label>
 								<div class="input">
-								  <input class="span3" id="email2" disabled name="email2" size="30" type="text">
+								  <input class="span3" id="email2" disabled name="email2" size="30" type="text" tabindex="1"  >
 								</div>
 							</div>
 							<div class="clearfix">
 								<label for="PWD" class="span2">PWD</label>
 								<div class="input">
-								  <input class="span3" id="PWD2" disabled name="PWD2" size="30" type="text" value="***">
+								  <input class="span3" id="PWD2" disabled name="PWD2" size="30" type="text" value="***" tabindex="2"  >
 								</div>
 							</div>
 							<div class="actions">
-									<input type="submit" class="btn primary" value="Login out" id="loginOutBtn" >
+									<input type="submit" class="btn primary" value="Login out" id="loginOutBtn" tabindex="3"  >
 							</div>
 						</fieldset>
 					</form>
@@ -95,14 +96,21 @@
         </div>
 		
 		<script>
+			
 			Common.page = {
 				isLogin:function(){
-					return Common.cookie.get("mail");
+					//return Common.cookie.get("mail") && ;
+					return Common.getItem("mail") && Common.getItem("pwd");
 				},
 				login:function(){
 					$('#loadingWrap').removeClass("hide");
 					$('#loading').addClass("hide");
 					$('#email').val(Common.getItem("mail"));
+				},
+				loginOut:function(email){
+					$('#loadingWrap').addClass("hide");
+					$('#loading').removeClass("hide");
+					$('#email2').val(email);
 				},
 				loginOut:function(email){
 					$('#loadingWrap').addClass("hide");
@@ -114,10 +122,15 @@
 				var email = $('#email').val();
 				var PWD = $('#PWD').val();
 				var url = config.host+"server/login.php";
+				$('#loginBtn').attr("disabled", true);
 				Common.post(url, {email:email, pwd:PWD}, function(data){
+					$('#loginBtn').attr("disabled", false);
 					if(data.code == 200){
+						Common.showTip(data);
 						Common.page.loginOut(email);
+						Common.getBackground().UserData = [];
 						Common.setItem("mail", email);
+						Common.setItem("pwd", PWD);
 					}else{
 						$('#PWD').val("").focus();
 					}
@@ -126,17 +139,21 @@
 			});
 			
 			$('#loadingform2').submit(function(){
-				//alert(1);
-				//Common.cookie.del("mail");
 				var url = config.host+"server/login_out.php";
-				Common.post(url);
+				Common.post(url, null, function(data){
+					Common.showTip({code:420});
+				});
 				Common.page.login();
+				Common.removeItem("pwd");
+				Common.getBackground().UserData = [];
 				return false;
 			});
-			var mail = Common.page.isLogin()
-			if( mail ){
-				Common.setItem("mail", decodeURIComponent(mail));
+			//var mail = Common.page.isLogin();
+			if( Common.page.isLogin() ){
+				var mail = Common.getItem("mail");
 				Common.page.loginOut(decodeURIComponent(mail));	
+			}else{
+				$('#email').val(Common.getItem("mail"));
 			};
 		</script>
 </body>

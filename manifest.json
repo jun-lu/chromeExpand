@@ -2,14 +2,14 @@
 	"name":"Chrome Expand",
 	"version":"1.0",
 	"description":"Chrome Expand",
-	//"background_page":"background.html",
+	"background_page":"background.html",
 	"browser_action":{
 				"default_icon": "favicon.ico",
 				"popup":"index.html",
 				"default_title":"Chrome Expand"
 	},
-	"permissions":["cookies","tabs","http://192.168.1.101:9030/"]//,
-	//"options_page":"html/options_page.html"
+	"permissions":["cookies","tabs","http://192.168.1.101:9030/"],
+	"options_page":"temp/options_page.html"
 }
 
 /*

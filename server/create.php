@@ -1,8 +1,8 @@
 <?php
 
 	
-	$_POST["email"] = "idche1@qq.com";
-	$_POST["pwd"] = "l1234556";
+	//$_POST["email"] = "idche1@qq.com";
+	//$_POST["pwd"] = "l1234556";
 	$email = $_POST["email"];
 	$pwd = $_POST["pwd"];
 	

@@ -1,3 +1,40 @@
 <?php
-	$user = "e3238e39e72fdb588d6e5bb360fa90b0";
+	
+	$time = $_GET["time"];
+	$mail = $HTTP_COOKIE_VARS["mail"];
+	
+	$result = array();
+	
+	if(!$mail){
+		$result["code"] = 405;//没有登录
+		echo json_encode($result);
+		exit;
+	}
+	
+	$mail = MD5($mail);
+	
+	if($time !="" ){
+		include "file.php";
+		$file = new File();
+		$folder = $mail;
+		
+		
+		if($file->is_dir($folder)){
+			$dataFile = $time;//strtotime(date("Y-m-d"));
+			$filePath = $folder."/".$dataFile.".json";
+			$item = array("word"=>$word, "des"=>$des);
+			
+			if( file_exists($filePath) ){//
+				$result["code"] = 200;//
+				$result["result"] = json_decode($file->read($filePath));
+			}else{
+				$result["code"] = 410;//当前没有数据
+			};
+		}else{
+			$result["code"] = 406;//用户不存在
+		}
+	}else{
+		$result["code"] = -1;//输入错误
+	}
+	echo json_encode($result); 
 ?>

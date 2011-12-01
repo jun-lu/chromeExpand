@@ -11,6 +11,7 @@
 	$result = array();
 	if(!$mail){
 		$result["code"] = 405;//没有登录
+		echo json_encode($result);
 		exit;
 	}
 	
@@ -20,12 +21,13 @@
 		include "file.php";
 		$file = new File();
 		$folder = $mail;
+		$time = time();
 		
 		
 		if($file->is_dir($folder)){
 			$dataFile = strtotime(date("Y-m-d"));
 			$filePath = $folder."/".$dataFile.".json";
-			$item = array("word"=>$word, "des"=>$des);
+			$item = array("word"=>$word, "des"=>$des, "time"=>$time);
 			
 			if( file_exists($filePath) ){//今天的已经存在
 				$data = json_decode($file->read($filePath));
@@ -36,10 +38,11 @@
 				array_push($data, $item);
 				$file->write($filePath, json_encode($data));
 			};
-			$result["code"] = 200;//用户不存在
+			$result["code"] = 200;//
 			$result["result"] = array();
 			$result["result"]["word"] = $word;
 			$result["result"]["des"] = $des;
+			$result["result"]["time"] = $time;
 		}else{
 			$result["code"] = 406;//用户不存在
 		}
