@@ -1,6 +1,6 @@
 var config = {
-	//host:"http://192.168.1.101:9030/"
-	host:"http://localhost/chrome/"
+	host:"http://192.168.1.101:9030/"
+	//host:"http://localhost/chrome/"
 };
 
 var Common = {
@@ -195,6 +195,8 @@ var Common = {
 			if(data && data.code == 200){
 				Common.addData(data.result, time);
 				callback && callback(data);
+			}else if(data && data.code == 410){
+				Common.addData([], time);
 			}
 		});
 	}

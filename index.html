@@ -16,13 +16,12 @@
 		<div class="msg hide" id="msg" >loading...</div>
 	</div>
 	<div class="container">
-		<div class="">
+		<div class="menu">
 			<ul class="tabs">
 				<li id="showAddPage" class="active" ><a href="#">Add</a></li>
 				<li id="showViewPage"><a href="#">View</a></li>
-				<li id="goSettingPage"><a href="#">Settings</a></li>
-				<li id="goHelpPage" ><a href="#">help?</a></li>
-			  </ul>
+			</ul>
+			<div class="seting" id="goSettingPage" title="setting and help" ></div>
 		</div>
 		<div class="row">
 			<div class="span8">
@@ -49,13 +48,13 @@
 					</form>
 				</div>
 				
-				<div id="viewPage" class="view-word hide" style="min-height:231px;max-height:500px;overflow-y:auto;"  >
+				<div id="viewPage" class="view-word hide">
 					<ul class="breadcrumb">
 						<li><a href="#" id="yesterday" >昨天</a> <span class="divider">/</span></li>
 						<li class="active" id="today" >今天</li>
 						<li> <span class="divider">/</span><a href="#" id="tomorrow" >明天</a></li>
 					</ul>
-					<div id="viewList">  </div>
+					<div id="viewList" style="min-height:197px;max-height:466px;overflow-y:auto;" >  </div>
 				</div>
 			</div>
 
@@ -63,17 +62,15 @@
 		<video id="playVodeo" controls="" autoplay="" style="display:none;" name="media" src="#"></video>
 	</div>
 	
-	
+	<script src="js/index.js"></script>
 	<script>
-		
-		
 		$('#viewList .read').live('click', function(){//朗读
 			var word = $(this)[0].dataset.word;
 			Common.read(word);
 			//$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
 		});
 		
-		$('#viewList .item').live('keyup', function(event){
+		$('#viewList .item').live('keyup', function(event){ //快捷键朗读
 			if(event.keyCode == 76){//L 键
 				//var word = $(this).dataset.word;
 				var readdom = $(this).find(".read");
@@ -103,110 +100,8 @@
 				Common.removeItem("tem_des");
 			}
 		});
-		
-		Common.page = {
-			pageIds:"#addPage,#viewPage",
-			menuIds:"#showAddPage,#showViewPage",
-			addPage:function(){
-				var word = Common.getItem("tem_word");
-				var des = Common.getItem("tem_des");
-				
-				if(word){
-					$('#keyword').val(word);
-				}
-				
-				if(des){
-					$('#description').val(des);
-				}
-				
-				$(this.pageIds).addClass("hide");
-				$("#addPage").removeClass("hide");
-				$(Common.page.menuIds).removeClass("active");
-				$("#showAddPage").addClass("active");
-				$('#keyword').focus();
-			},
-			viewPage:function(dayTime){
 
-				$(this.pageIds).addClass("hide");
-				$("#viewPage").removeClass("hide");
-				$(Common.page.menuIds).removeClass("active");
-				$("#showViewPage").addClass("active");
-				
-				var bg = Common.getBackground();
-				var time = dayTime || Common.getDayTime();
-				var dayData = bg.UserData[time];
-				var html = "";
-				
-				$('#yesterday').text(Common.sortFormat(time*1000 - 86400000));
-				$('#tomorrow').text(Common.sortFormat(time*1000 + 86400000));
-				$('#today').text(Common.sortFormat(time*1000));
-				
-				$('#yesterday').unbind('click').bind('click', function(){
-					Common.page.viewPage((time * 1000 - 86400000) / 1000);
-				});
-				$('#tomorrow').unbind('click').bind('click', function(){
-					Common.page.viewPage((time * 1000 + 86400000) / 1000);
-				});
-				
-				if(dayData){
-					for(var i=dayData.length-1; i>=0; i--){
-						html += Common.tmpl(Common.item, dayData[i]);
-					}
-				}else{//当天数据不存在 就请求数据
-					Common.getDayData(time, function(data){
-						Common.page.viewPage(time);
-					});
-				}
-				$('#viewList').html(html);
-			},
-			regEvent:function(){//导航按钮
-				$(this.menuIds).each(function(i){
-					var i = i;
-					$(this).click(function(){
-						var time = Common.getDayTime();
-						if(i == 0){
-							Common.page.addPage();
-						}else if(i == 1){
-							Common.page.viewPage( Common.getDayTime() );
-						}
-					});
-				});
-				$('#goSettingPage').click(function(){
-					chrome.tabs.create({url:'temp/options_page.html'});
-				});
-				$('#goHelpPage').click(function(){
-					chrome.tabs.create({url:'temp/help.html'});
-				});
-			},
-			addReg:function(){ // 添加form
-				$('#addAndSaveForm').submit(function(){
-					var word = $('#keyword').val();
-					var des = $('#description').val();
-					var url = config.host+"server/add.php";
-					if(word){
-						Common.post(url, {word:word, des:des}, function(data){
-							if(data.code == 200){
-								var bg = Common.getBackground();
-								var userData = bg.UserData;
-								var dayTime = Common.getDayTime();
-								
-								Common.removeItem("tem_word");//删除临时存储
-								Common.removeItem("tem_des");//删除临时存储
-								
-								if(userData && userData[dayTime]){
-									console.log(data.result);
-									Common.addData([data.result], dayTime);
-									
-								}
-								Common.page.viewPage(dayTime);
-							}
-						});
-					}
-					return false;
-				});
-			}
-		};
-		Common.page.regEvent();
+		Common.page.regEvent(); // 页面事件注册
 		Common.page.addReg();
 		Common.page.addPage();
 	</script>
