@@ -22,7 +22,7 @@
 				$result["result"] = array();
 				$result["result"]["md5"] = $folder;
 				SetCookie("mail", $email, time()+3600*24*7, "/");
-				echo $HTTP_COOKIE_VARS["mail"];
+				echo "----".$HTTP_COOKIE_VARS["mail"];
 			}else{
 				SetCookie("mail", "", time()-1, "/");
 				$result["code"] = 402;//密码错误
