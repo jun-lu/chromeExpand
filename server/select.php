@@ -1,8 +1,8 @@
 <?php
 	
 	$time = $_GET["time"];
-	//$mail = $_COOKIE['mail'];
-	$mail = $HTTP_COOKIE_VARS["mail"];
+	$mail = $_COOKIE['mail'];
+	//$mail = $HTTP_COOKIE_VARS["mail"];
 	//echo "mail:".$mail;
 	$result = array();
 	
