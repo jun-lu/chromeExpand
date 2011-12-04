@@ -21,19 +21,19 @@
 				$result["code"] = 200;
 				$result["result"] = array();
 				$result["result"]["md5"] = $folder;
-				SetCookie("mail", $email, time()+3600*24*7, "/");
-				echo "----".$HTTP_COOKIE_VARS["mail"];
+				SetCookie("mail", $email, time()+3600*24*7);
+				//echo "----".$HTTP_COOKIE_VARS["mail"];
 			}else{
-				SetCookie("mail", "", time()-1, "/");
+				SetCookie("mail", "", time()-1);
 				$result["code"] = 402;//密码错误
 			}
 		}else{
-			SetCookie("mail", "", time()-1, "/");
+			SetCookie("mail", "", time()-1);
 			$result["code"] = 404;//email错误
 		}
 		
 	}else{
-		SetCookie("mail", "", time()-1, "/");
+		SetCookie("mail", "", time()-1);
 		$result["code"] = -1;//输入错误
 	}
 	echo json_encode($result); 
