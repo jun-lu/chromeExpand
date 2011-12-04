@@ -6,7 +6,8 @@
 	$word = $_POST["word"];
 	$des = $_POST["des"];
 	
-	$mail = $HTTP_COOKIE_VARS["mail"];
+	//$mail = $HTTP_COOKIE_VARS["mail"];
+	$mail = $_COOKIE['mail'];
 	
 	$result = array();
 	if(!$mail){
