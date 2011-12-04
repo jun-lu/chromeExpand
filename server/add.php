@@ -29,16 +29,19 @@
 			$dataFile = strtotime(date("Y-m-d"));
 			$filePath = $folder."/".$dataFile.".json";
 			$item = array("word"=>$word, "des"=>$des, "time"=>$time);
-			
-			if( file_exists($filePath) ){//今天的已经存在
-				$data = json_decode($file->read($filePath));
-				array_push($data, $item);
-				$file->write($filePath, json_encode($data));
+			if( is_writable($filePath) ){
+				if( file_exists($filePath)){//今天的已经存在
+					$data = json_decode($file->read($filePath));
+					array_push($data, $item);
+					$file->write($filePath, json_encode($data));
+				}else{
+					$data = array();
+					array_push($data, $item);
+					$file->write($filePath, json_encode($data));
+				};
 			}else{
-				$data = array();
-				array_push($data, $item);
-				$file->write($filePath, json_encode($data));
-			};
+				$result["code"] = 407;//没有登录
+			}
 			$result["code"] = 200;//
 			$result["result"] = array();
 			$result["result"]["word"] = $word;
