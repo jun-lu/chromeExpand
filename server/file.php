@@ -49,8 +49,8 @@
 				fclose($handle);
 				return 1;
 			}else{
-				$cFile = fopen ($file, 'w');
-				$this->write($file, $data);
+				$cFile = fopen($file, 'w');
+				$this->write($cFile, $data);
 			};
 		}
 	}
