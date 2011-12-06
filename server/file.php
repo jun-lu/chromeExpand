@@ -37,7 +37,7 @@
 		
 		
 		public function write($file, $data){
-			file_put_contents($file, $data);
+			return file_put_contents($file, $data);
 			// if( file_exists($file) ){
 				// if (!$handle = fopen($file, 'w')) {
 					 // return 2;
