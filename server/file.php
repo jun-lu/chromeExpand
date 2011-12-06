@@ -37,21 +37,22 @@
 		
 		
 		public function write($file, $data){
-			if( file_exists($file) ){
-				if (!$handle = fopen($file, 'w')) {
-					 return 2;
-					 exit;
-				}
-				if (fwrite($handle, ($data)) === FALSE) {
-					return 3;
-					exit;
-				}
-				fclose($handle);
-				return 1;
-			}else{
-				$cFile = fopen($file, 'w');
-				$this->write($cFile, $data);
-			};
+			file_put_contents($file, $data);
+			// if( file_exists($file) ){
+				// if (!$handle = fopen($file, 'w')) {
+					 // return 2;
+					 // exit;
+				// }
+				// if (fwrite($handle, ($data)) === FALSE) {
+					// return 3;
+					// exit;
+				// }
+				// fclose($handle);
+				// return 1;
+			// }else{
+				// $cFile = fopen($file, 'w');
+				// $this->write($cFile, $data);
+			// };
 		}
 	}
 ?>
