@@ -29,14 +29,14 @@
 			$dataFile = strtotime(date("Y-m-d"));
 			$filePath = $folder."/".$dataFile.".json";
 			$item = array("word"=>$word, "des"=>$des, "time"=>$time);
-			if( is_writable($filePath) ){
+			//if( is_writable($filePath) ){
 				if( file_exists($filePath)){//今天的已经存在
-					//$result["code"] = 201;//
+					$result["code"] = 201;//
 					$data = json_decode($file->read($filePath));
 					array_push($data, $item);
 					$result["code"] = $file->write($filePath, json_encode($data));
 				}else{
-					//$result["code"] = 202;//
+					$result["code"] = 202;//
 					$data = array();
 					array_push($data, $item);
 					$result["code"] = $file->write($filePath, json_encode($data));
@@ -48,9 +48,9 @@
 				$result["result"]["des"] = $des;
 				$result["result"]["time"] = $time;
 				
-			}else{
-				$result["code"] = 407;//没有登录
-			}			
+			//}else{
+			//	$result["code"] = 407;//没有
+			//}			
 		}else{
 			$result["code"] = 406;//用户不存在
 		}
