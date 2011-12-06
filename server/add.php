@@ -39,14 +39,16 @@
 					array_push($data, $item);
 					$file->write($filePath, json_encode($data));
 				};
+				
+				$result["code"] = 200;//
+				$result["result"] = array();
+				$result["result"]["word"] = $word;
+				$result["result"]["des"] = $des;
+				$result["result"]["time"] = $time;
+				
 			}else{
 				$result["code"] = 407;//没有登录
-			}
-			$result["code"] = 200;//
-			$result["result"] = array();
-			$result["result"]["word"] = $word;
-			$result["result"]["des"] = $des;
-			$result["result"]["time"] = $time;
+			}			
 		}else{
 			$result["code"] = 406;//用户不存在
 		}
