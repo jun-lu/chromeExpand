@@ -31,15 +31,16 @@
 			$item = array("word"=>$word, "des"=>$des, "time"=>$time);
 			//if( is_writable($filePath) ){
 				if( file_exists($filePath)){//今天的已经存在
-					$result["code"] = 201;//
+					
 					$data = json_decode($file->read($filePath));
 					array_push($data, $item);
-					$result["code"] = $file->write($filePath, json_encode($data));
+					$file->write($filePath, json_encode($data));
+					$result["code"] = 200;//
 				}else{
-					$result["code"] = 202;//
 					$data = array();
 					array_push($data, $item);
-					$result["code"] = $file->write($filePath, json_encode($data));
+					$file->write($filePath, json_encode($data));
+					$result["code"] = 200;//
 				};
 				
 				//$result["code"] = 200;//

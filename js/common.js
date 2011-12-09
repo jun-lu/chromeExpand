@@ -1,6 +1,7 @@
 var config = {
-	host:"http://192.168.1.101:9030/"
+	//host:"http://192.168.1.101:9030/"
 	//host:"http://localhost/chrome/"
+	host:"http://184.82.233.162/"
 };
 
 var Common = {
@@ -171,7 +172,7 @@ var Common = {
 	},
 	getDayTime:function(){//今天的时间戳
 	//php 里面默认去了当天8点整的时间戳
-		return new Date(Common.format(new Date(), "yyyy-M-d")+" 08:00:00").getTime() / 1000;
+		return new Date(Common.format(new Date(), "yyyy-M-d")+" 00:00:00").getTime() / 1000;
 	},
 	addData:function(data, time){//向JS内存加入一条信息
 		var bg = this.getBackground();
