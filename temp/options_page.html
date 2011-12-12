@@ -51,6 +51,7 @@
 				<div id="loading" class="hide">
 					<form id="loadingform2">
 						<fieldset>
+							
 						   <div class="clearfix">
 								<label for="email2" class="span2">Email</label>
 								<div class="input">
@@ -61,10 +62,15 @@
 								<label for="PWD" class="span2">PWD</label>
 								<div class="input">
 								  <input class="span3" id="PWD2" disabled name="PWD2" size="30" type="text" value="***" tabindex="2"  >
+								
 								</div>
 							</div>
 							<div class="actions">
-									<input type="submit" class="btn primary" value="Login out" id="loginOutBtn" tabindex="3"  >
+									<input type="submit" class="btn primary" value="Login out" id="loginOutBtn" tabindex="3"  >  <input type="button" class="btn error" value="Close Tab" id="CloseTab" tabindex="3"  ><br/> <br/>
+									<ol>
+										<li>关闭此页面，在浏览器右上角使用应用</li>
+										<li>如果登录失效您必须重新登录一次</li>
+									</ol>
 							</div>
 						</fieldset>
 					</form>
@@ -104,7 +110,7 @@
 				Common.post(url, {email:email, pwd:PWD}, function(data){
 					$('#loginBtn').attr("disabled", false);
 					if(data.code == 200){
-						Common.showTip(data);
+						Common.showTip({code:201}, 0);
 						Common.page.loginOut(email);
 						Common.getBackground().UserData = [];
 						Common.setItem("mail", email);
@@ -125,6 +131,10 @@
 				Common.removeItem("pwd");
 				Common.getBackground().UserData = [];
 				return false;
+			});
+			
+			$('#CloseTab').click(function(){
+				window.close();
 			});
 			//var mail = Common.page.isLogin();
 			if( Common.page.isLogin() ){

@@ -47,9 +47,9 @@ var Common = {
 		var msg = TipData[data.code] || TipData["1000"]+data.code;
 		this.tip(msg);
 	},
-	showTip:function(data){
+	showTip:function(data, time){
 		var msg = TipData[data.code] || TipData["1000"]+data.code;
-		this.tip(msg);
+		this.tip(msg, time);
 	},
 	read:function(word){
 		$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");

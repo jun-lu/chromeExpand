@@ -14,7 +14,7 @@
 	
 	$mail = MD5($mail);
 	
-	if($time !="" ){
+	if($time != "" ){
 		include "file.php";
 		$file = new File();
 		$folder = $mail;
@@ -35,7 +35,7 @@
 			$result["code"] = 406;//用户不存在
 		}
 	}else{
-		$result["code"] = -1;//输入错误
+		$result["code"] = 102;//输入错误
 	}
 	echo json_encode($result); 
 ?>
