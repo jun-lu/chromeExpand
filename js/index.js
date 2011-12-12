@@ -52,6 +52,11 @@ Common.page = {
 		$('#tomorrow').unbind('click').bind('click', function(){
 			Common.page.viewPage((time * 1000 + 86400000) / 1000);
 		});
+		$('#reloadData').unbind('click').bind('click', function(){
+			Common.getDayData(time, function(data){
+				Common.page.viewPage(time);
+			}, true);
+		});
 		
 		if(dayData && dayData.length){
 			for(var i=dayData.length-1; i>=0; i--){

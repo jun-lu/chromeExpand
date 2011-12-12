@@ -1,15 +1,20 @@
 ﻿{
-	"name":"Chrome Expand",
+	"name":"For myself",
 	"version":"1.0",
-	"description":"Chrome Expand",
+	"description":"For myself",
 	"background_page":"background.html",
 	"browser_action":{
 				"default_icon": "favicon.ico",
 				"popup":"index.html",
-				"default_title":"Chrome Expand"
+				"default_title":"For myself"
 	},
 	"permissions":["cookies","tabs","http://*/*"],
-	"options_page":"temp/options_page.html"
+	"options_page":"temp/options_page.html",
+	"icon":{
+		"16":"icon16.png",
+		"48":"icon48.png",
+		"128":"icon128.png"
+	}
 }
 
 /*

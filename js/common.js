@@ -1,7 +1,8 @@
 var config = {
 	//host:"http://192.168.1.101:9030/"
 	//host:"http://localhost/chrome/"
-	host:"http://184.82.233.162/"
+	//host:"http://184.82.233.162/",
+	host:"http://www.nihaojun.com/"
 };
 
 var Common = {
