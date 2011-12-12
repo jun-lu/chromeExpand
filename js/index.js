@@ -146,6 +146,8 @@ Common.page = {
 						Common.page.viewPage(dayTime);
 					}
 				});
+			}else{
+				$('#keyword').focus();
 			}
 			return false;
 		});
