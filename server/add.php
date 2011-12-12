@@ -18,7 +18,7 @@
 	
 	$mail = MD5($mail);
 	
-	if($word!=""){
+	if($word!="" || $des != ""){
 		include "file.php";
 		$file = new File();
 		$folder = $mail;
