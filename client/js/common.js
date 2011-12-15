@@ -195,6 +195,7 @@ var Common = {
 		var url = config.host+"server/select.php";
 		this.get(url,{time:time}, function(data){
 			if(data && data.code == 200){
+				Common.getBackground().UserData[time] = [];
 				Common.addData(data.result, time);
 				callback && callback(data);
 			}else if(data && data.code == 410){
