@@ -2,7 +2,7 @@ var config = {
 	//host:"http://192.168.1.101:9030/"
 	//host:"http://localhost/chrome/"
 	//host:"http://184.82.233.162/",
-	host:"http://www.nihaojun.com/"
+	host:"http://myself.nihaojun.com/"
 };
 
 var Common = {
@@ -61,8 +61,8 @@ var Common = {
 			type:"get",
 			data:data,
 			dataType:"json",
-			error:function(){
-				Common.tip(TipData["1002"]);
+			error:function(data){
+				Common.tip(TipData["1002"], 0);
 			},
 			success:function(data){
 				if(data && data.code != 200){
