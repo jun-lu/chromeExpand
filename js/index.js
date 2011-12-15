@@ -138,6 +138,9 @@ Common.page = {
 						Common.removeItem("tem_word");//删除临时存储
 						Common.removeItem("tem_des");//删除临时存储
 						
+						$('#keyword').val('');
+						$('#description').val('');
+						
 						if(userData && userData[dayTime]){
 							console.log(data.result);
 							Common.addData([data.result], dayTime);

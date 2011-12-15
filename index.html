@@ -20,12 +20,13 @@
 			<ul class="tabs">
 				<li id="showAddPage" class="active" ><a href="#">Add</a></li>
 				<li id="showViewPage"><a href="#">View</a></li>
+				<li id="showRecommend"><a href="#">Recommend</a></li>
 			</ul>
 			<div class="seting" id="goSettingPage" title="setting and help" ></div>
 		</div>
 		<div class="row">
 			<div class="span8">
-				<div id="addPage" >
+				<div id="addPage" class="hide" >
 					<form id="addAndSaveForm">
 						<fieldset>
 							<legend>Add Word</legend>
@@ -57,7 +58,13 @@
 						</ul>
 						<a href="#" class="reload" id="reloadData" >refresh</a>
 					</div>
-					<div id="viewList" style="min-height:197px;max-height:466px;overflow-y:auto;" >  </div>
+					<div id="viewList" class="view-list">  </div>
+				</div>
+				
+				<div id="viewRecommend" class="view-word hide">
+					<div class="view-list" id="recommendList" >
+						
+					</div>
 				</div>
 			</div>
 

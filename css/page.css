@@ -46,6 +46,7 @@ border: solid 1px #a6a6a6;
 	.view-word .read:active,.view-word .read:focus, .read.active{border-color:#333;cursor:default;border-radius:2px;background-color:-webkit-linear-gradient(top,#f8f8f8,#f1f1f1);}
 	.view-word .des{margin-top:5px;}
 	.view-word .help-block{display:none;}
+	.view-word .view-list{min-height:197px;max-height:466px;overflow-y:auto;}
 .menu{position:relative;}
 .seting{background: url(../images/gear.png) no-repeat;display:inline-block;height:17px;margin:-18px 5px 0px 6px;width:15px;cursor:pointer; position:absolute;top:25px;right:10px;cursor:pointer;}
 
