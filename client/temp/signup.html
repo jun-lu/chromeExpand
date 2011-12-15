@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+        <meta charset="UTF-8">
+        <title>Sign Up</title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/page.css" />
+		<script src="../js/jQuery.js"></script>
+		<script src="../js/tipdata.js"></script>
+		<script src="../js/common.js"></script>
+		
+		
+    </head>
+    <body id="options" >
+		<div class="msg-box">
+			<div class="msg hide" id="msg">loading...</div>
+		</div>
+        <div id="wrapper">
+            <header>
+                <h1>Sign Up</h1> <a href="help.html">help?</a>
+            </header>
+            <section>
+            	<div id="loadingWrap" >
+					<form id="signupForm">
+						<fieldset>
+							
+						   <div class="clearfix">
+								<label for="email" class="span2">Email</label>
+								<div class="input">
+								  <input class="span3" id="email" name="email" tabindex="1" size="30" type="text" placeholder="input the email"  > <a href="options_page.html">Login</a>
+								</div>
+							</div>
+							<div class="clearfix">
+								<label for="PWD" class="span2">PWD</label>
+								<div class="input">
+								  <input class="span3" id="PWD" name="pwd" size="30" tabindex="2"  type="password">
+								</div>
+							</div>
+							<div class="actions">
+									<input type="submit" class="btn primary" value="Sign Up" tabindex="3"  id="signupBtn" >
+							</div>
+						</fieldset>
+					</form>
+				</div>
+            </section>
+        </div>
+		
+		<script>
+			$('#signupForm').submit(function(){
+				var email = $('#email').val();
+				var PWD = $('#PWD').val();
+				var url = config.host+"server/create.php";
+				$('#signupBtn').attr('disabled', true);
+				Common.post(url, {email:email, pwd:PWD}, function(data){
+					$('#signupBtn').attr('disabled', false);
+					if(data.code == 200){
+						Common.tip("注册成功！可以去登录了");
+						Common.getBackground().UserData = [];
+						Common.setItem("mail", email);
+					}
+					if(data.code == 401){
+						$('#email').focus();
+					}
+					if(data.code == -1){
+						$('#PWD').focus();
+					}
+				});
+				return false;
+			});
+		</script>
+</body>
+</html>

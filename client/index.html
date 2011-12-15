@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello World</title>
+	
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/page.css" />
+	<script src="js/jQuery.js"></script>
+	<script src="js/tipdata.js"></script>
+	<script src="js/common.js"></script>
+
+</head>
+<body>
+	<div class="msg-box">
+		<div class="msg hide" id="msg" >loading...</div>
+	</div>
+	<div class="container">
+		<div class="menu">
+			<ul class="tabs">
+				<li id="showAddPage" class="active" ><a href="#">Add</a></li>
+				<li id="showViewPage"><a href="#">View</a></li>
+			</ul>
+			<div class="seting" id="goSettingPage" title="setting and help" ></div>
+		</div>
+		<div class="row">
+			<div class="span8">
+				<div id="addPage" >
+					<form id="addAndSaveForm">
+						<fieldset>
+							<legend>Add Word</legend>
+							<div class="clearfix">
+								<label for="keyword" class="span2" >Word</label>
+								<div class="input">
+								  <input class="span5" id="keyword" name="word" size="30" type="text" placeholder="add new word">
+								</div>
+							</div>
+							<div class="clearfix">
+							<label for="description" class="span2"  >Description</label>
+							<div class="input">
+							  <textarea class="span5" id="description" name="des" rows="3" placeholder="description the word" ></textarea>
+							</div>
+						  </div>
+						  <div class="actions">
+							<input type="submit" class="btn primary" value="Add and Save" id="addAndSave" >
+						  </div>
+					  </fieldset>
+					</form>
+				</div>
+				
+				<div id="viewPage" class="view-word hide">
+					<div class="breadcrumb-box">
+						<ul class="breadcrumb">
+							<li><a href="#" id="yesterday" >昨天</a> <span class="divider">/</span></li>
+							<li class="active" id="today" >今天</li>
+							<li> <span class="divider">/</span><a href="#" id="tomorrow" >明天</a></li>
+						</ul>
+						<a href="#" class="reload" id="reloadData" >refresh</a>
+					</div>
+					<div id="viewList" style="min-height:197px;max-height:466px;overflow-y:auto;" >  </div>
+				</div>
+			</div>
+
+		</div>
+		<video id="playVodeo" controls="" autoplay="" style="display:none;" name="media" src="#"></video>
+	</div>
+	
+	<script src="js/index.js"></script>
+	<script>
+		$('#viewList .read').live('click', function(){//朗读
+			var word = $(this)[0].dataset.word;
+			Common.read(word);
+			//$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
+		});
+		
+		$('#viewList .item').live('keyup', function(event){ //快捷键朗读
+			if(event.keyCode == 76){//L 键
+				//var word = $(this).dataset.word;
+				var readdom = $(this).find(".read");
+				var word = readdom[0].dataset.word;
+				readdom.addClass("active");
+				setTimeout(function(){
+					readdom.removeClass("active");
+				},500);
+				Common.read(word);
+			}
+		});
+		
+		$('#keyword').blur(function(){
+			var word = $(this).val();
+			if(word){
+				Common.setItem("tem_word", word);
+			}else{
+				Common.removeItem("tem_word");
+			}
+		});
+		
+		$('#description').blur(function(){
+			var des = $(this).val();
+			if(des){
+				Common.setItem("tem_des", des);
+			}else{
+				Common.removeItem("tem_des");
+			}
+		});
+
+		Common.page.regEvent(); // 页面事件注册
+		Common.page.addReg();
+		Common.page.addPage();
+	</script>
+</body>
+</html>
