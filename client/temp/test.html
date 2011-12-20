@@ -14,13 +14,13 @@
            //应用的APPID，请改为你自己的
             var appID = "184.82.233.162";
            //成功授权后的回调地址，请改为你自己的
-            var redirectURI = "http://www.nihaojun.com";
+            var redirectURI = "www.nihaojun.com";
 
            //构造请求
            if (window.location.hash.length == 0) 
            {
               var path = 'https://graph.qq.com/oauth2.0/authorize?';
-              var queryParams = ['client_id=' + appID,'redirect_uri=' + redirectURI,'scope=' + 'get_user_info,list_album,upload_pic,add_feeds,do_like','response_type=token'];
+              var queryParams = ['client_id=' + appID,'redirect_uri=' + redirectURI,'response_type=token'];
         
               var query = queryParams.join('&');
               var url = path + query;
