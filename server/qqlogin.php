@@ -10,7 +10,7 @@
 	
 		function callback(user){
 			console.log(user);
-			console.log(window.opener);
+			window.opener.location.reload();
 		};
 		
 		if(window.location.hash.length > 1){
@@ -23,6 +23,8 @@
 			script.src = url;
 			document.body.appendChild(script);
 		}
+		
+		callback();
 	</script>
 </body>
 </html>
