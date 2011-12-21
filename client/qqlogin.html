@@ -7,15 +7,14 @@
 </head>
 <body>
 	<script>
-		var accessToken;
+	
 		function callback(user){
-			//console.log(user);
-			window.location.href="chrome-extension://epljikhhgnnoknfpdklhobnhcapljlom/temp/qqlogin.html#openid="+user.openid+"&client_id="+user.client_id+"&accessToken="+accessToken.split("=")[1];
+			console.log(user);
+			window.opener.location.reload();
 		};
 		
-		
 		if(window.location.hash.length > 1){
-			accessToken = window.location.hash.substring(1);
+			var accessToken = window.location.hash.substring(1);
 			var path = "https://graph.qq.com/oauth2.0/me?";
 			var queryParams = [accessToken, 'callback=callback'];
 			var query = queryParams.join('&');
@@ -24,7 +23,8 @@
 			script.src = url;
 			document.body.appendChild(script);
 		}
-		//
+		window.location.href = "http://myself.nihaojun.com/server/qqlogin.php";
+		//callback();
 	</script>
 </body>
 </html>

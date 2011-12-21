@@ -2,6 +2,8 @@ var config = {
 	//host:"http://192.168.1.101:9030/"
 	//host:"http://localhost/chrome/"
 	//host:"http://184.82.233.162/",
+	qqAppId:100236558,
+	sinaAppId:635665288,
 	host:"http://myself.nihaojun.com/"
 };
 
@@ -202,5 +204,29 @@ var Common = {
 				Common.addData([], time);
 			}
 		});
+	},
+	escapeReg:function (source) {
+		return String(source)
+				.replace(new RegExp("([.*+?^=!:\x24{}()|[\\]\/\\\\])", "g"), '\\\x241');
+	},
+	getQueryValue:function (url, key) {
+		var reg = new RegExp(
+							"(^|&|\\?|#)" 
+							+ Common.escapeReg(key) 
+							+ "=([^&#]*)(&|\x24|#)", 
+						"");
+		var match = url.match(reg);
+		if (match) {
+			return match[2];
+		}
+		
+		return null;
+	},
+	qqApiParameter : function(){
+		return {
+			access_token:Common.cookie.get("accessToken"), 
+			oauth_consumer_key:Common.cookie.get("client_id"), 
+			openid:Common.cookie.get("openid")
+		};
 	}
 };

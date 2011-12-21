@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>QQ login</title>
+	<script src="../js/jQuery.js"></script>
+	<script src="../js/tipdata.js"></script>
+	<script src="../js/common.js"></script>
+</head>
+<body>
+	<script>
+
+		
+		if(window.location.hash.length > 1){
+			var string = window.location.hash.substring(1);
+			//openid=65B476FC7B6006A3346A2ABABEE568AE&client_id=100236558&accessToken=access_token=0584F021A729A797F9B3701268A190FE&expires_in=7776000
+			var openid = Common.getQueryValue(string, 'openid');
+			var client_id = Common.getQueryValue(string, 'client_id');
+			var accessToken = Common.getQueryValue(string, 'accessToken');
+			
+			Common.cookie.set('openid', openid);
+			Common.cookie.set('client_id', client_id);
+			Common.cookie.set('accessToken', accessToken);
+			window.opener.location.reload();
+			
+		};
+	</script>
+</body>
+</html>
