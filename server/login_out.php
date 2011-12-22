@@ -2,6 +2,6 @@
 
 	$result = array();
 	$result["code"] = 200;
-	SetCookie("mail", "", time()-1, "/");
+	setcookie("mail", "", time() - 3600);
 	echo json_encode($result); 
 ?>
