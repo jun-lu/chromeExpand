@@ -10,7 +10,7 @@
 		var accessToken;
 		function callback(user){
 			//console.log(user);
-			window.location.href="chrome-extension://epljikhhgnnoknfpdklhobnhcapljlom/temp/qqlogin.html#openid="+user.openid+"&client_id="+user.client_id+"&accessToken="+accessToken.split("=")[1];
+			window.location.href="chrome-extension://"+ <?php echo $_GET["domain"];?> +"/temp/qqlogin.html#openid="+user.openid+"&client_id="+user.client_id+"&accessToken="+accessToken.split("=")[1];
 		};
 		
 		
