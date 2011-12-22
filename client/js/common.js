@@ -56,6 +56,20 @@ var Common = {
 	read:function(word){
 		$('#playVodeo').attr("src", "http://translate.google.com/translate_tts?ie=UTF-8&q="+ word +"&tl=en&prev=input");
 	},
+	ajax:function(url, data, success, type){
+		$.ajax({
+			url:url,
+			type:type || "get",
+			data:data,
+			dataType:"json",
+			error:function(data){
+				Common.tip(TipData["1002"], 0);
+			},
+			success:function(data){
+				success && success(data);
+			}
+		});
+	},
 	get:function(url, data, success){
 		Common.tip(TipData["1001"], 0);
 		$.ajax({

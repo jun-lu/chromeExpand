@@ -8,8 +8,6 @@
 		<script src="../js/jQuery.js"></script>
 		<script src="../js/tipdata.js"></script>
 		<script src="../js/common.js"></script>
-		<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=635665288" type="text/javascript" charset="utf-8"></script>
-		
     </head>
     <body id="options" >
 		<div class="msg-box">
@@ -27,7 +25,7 @@
 						   <div class="clearfix">
 								<label for="email" class="span2">Email</label>
 								<div class="input">
-								  <input class="span3" id="email" name="email" size="30" type="text" tabindex="1" placeholder="input the email or username"  > <a href="signup.html">Sign Up</a>
+								  <input class="span3" id="email" name="email" size="30" type="text" tabindex="1" placeholder="User name"  > <a href="signup.html">Sign Up</a>
 								</div>
 							</div>
 							<div class="clearfix">
@@ -41,9 +39,10 @@
 									<a id="qqLogin" href="#qqlogin">
 										<img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="qq login" />
 									</a>
+									<!--
 									<a id="sinaLogin" href="#sinalogin">
 										<img src="http://www.sinaimg.cn/blog/developer/wiki/240.png" alt="sina login" />
-									</a>
+									</a>-->
 								</div>
 							</div>
 							<div class="actions">
@@ -93,7 +92,7 @@
 		
 		<script>
 			//var qq_redirect_uri = "http://192.168.1.101:9030/server/time.php";
-			var qq_redirect_uri = "http://myself.nihaojun.com/server/qqlogin.php";
+			var qq_redirect_uri = "http://myself.nihaojun.com/server/qqloginxd.php";
 			var qq_scope = "get_info";
 			var sina_redirect_uri="http://myself.nihaojun.com/server/sinalogin.php";
 			Common.page = {
@@ -126,10 +125,12 @@
 					$('#loading').removeClass("hide");
 					$('#email2').val(email);
 				},
-				loginOut:function(email){
-					$('#loadingWrap').addClass("hide");
-					$('#loading').removeClass("hide");
-					$('#email2').val(email);
+				loginSuccessCallback:function(email, nickname){
+					Common.page.loginOut(nickname);
+					Common.getBackground().UserData = [];
+					Common.setItem("mail", email);
+					Common.setItem("nickname", nickname);
+					Common.cookie.set("mail", email, {expires:new Date((new Date().getTime()+ 1000 * 60 * 60 * 24 * 7 ))});//有消息+7天
 				}
 			};
 			$('#loadingform').submit(function(){
@@ -141,10 +142,11 @@
 					$('#loginBtn').attr("disabled", false);
 					if(data.code == 200){
 						Common.showTip({code:201}, 0);
-						Common.page.loginOut(email);
-						Common.getBackground().UserData = [];
-						Common.setItem("mail", email);
-						Common.cookie.set("mail", email, {expires:new Date((new Date().getTime()+ 1000 * 60 * 60 * 24 * 7 ))});//有消息+7天
+						Common.page.loginSuccessCallback(email, email);
+						//Common.page.loginOut(email);
+					//	Common.getBackground().UserData = [];
+						//Common.setItem("mail", email);
+						//Common.cookie.set("mail", email, {expires:new Date((new Date().getTime()+ 1000 * 60 * 60 * 24 * 7 ))});//有消息+7天
 					}else{
 						$('#PWD').val("").focus();
 					}
@@ -159,6 +161,8 @@
 				});
 				Common.page.login();
 				Common.removeItem("pwd");
+				Common.cookie.del("mail");
+				Common.cookie.del("openid");
 				Common.getBackground().UserData = [];
 				return false;
 			});
@@ -174,15 +178,18 @@
 				$('#email').val(Common.getItem("mail"));
 			};
 			
-			Common.page.otherLogin();
+			Common.page.otherLogin();//其他方式登录
 			
-			if(window.location.hash.length > 0){
-				var data = Common.qqApiParameter();
-				data.content = "app test";
-				Common.get("https://graph.qq.com/user/get_info", data, function(data){
-					console.log(data);
+			var qqData = Common.qqApiParameter();//qq 登录
+			if(qqData.openid){
+				Common.post(config.host+"server/qqlogin.php", {email:qqData.openid, access_token:qqData.accessToken}, function(data){
+					if(data.code == 200){
+						Common.showTip({code:201}, 0);
+						Common.page.loginSuccessCallback(qqData.openid, Common.cookie.get("nickname"));
+					}
 				});
 			}
+			
 		</script>
 </body>
 </html>
