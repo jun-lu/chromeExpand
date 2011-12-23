@@ -14,6 +14,14 @@
 	$result = array();
 	
 	$user = new UserSystem();
+	
+	if(!$email){
+		$result["code"] = -1;
+		SetCookie("mail", "", time()-1);
+		echo json_encode($result); 
+		exit;
+	}
+	
 	if( $user->isSignUp($email) ){//已经注册过
 	
 		$result["code"] = 200;
