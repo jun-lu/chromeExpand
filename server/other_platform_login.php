@@ -14,7 +14,7 @@
 	$result = array();
 	
 	$user = new UserSystem();
-	if( $user->isSignUp($email) ){//已经登录过
+	if( $user->isSignUp($email) ){//已经注册过
 	
 		$result["code"] = 200;
 		
@@ -29,6 +29,8 @@
 		$result["result"]["md5"] = $folder;
 		SetCookie("mail", $email, time()+3600*24*7);
 			
+	}else{
+		SetCookie("mail", "", time()-1);
 	}
 	
 	echo json_encode($result); 
