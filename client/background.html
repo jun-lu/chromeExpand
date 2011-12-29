@@ -9,6 +9,59 @@
 		var UserData = {
 			
 		};
+		var contextMenus = {
+			createMenus:function(){
+				chrome.contextMenus.create(
+					{
+						"title": "Google translate",
+						"contexts":["selection"],//var contexts = ["page","selection","link","editable","image","video", "audio"];
+						"onclick": function(info, tab){
+						
+							//var a = chrome.tabs.get(tab.id,function(){
+							//	console.log(arguments);
+							//});
+							//console.log(a);
+							
+							chrome.tabs.executeScript(tab.id, {
+								code:"alert(1);"
+							});
+							chrome.tabs.insertCSS(tab.id, {
+								file:"css/bootstrap.min.css",
+							});
+							
+							/*
+							info
+								editable: false
+								menuItemId: 1
+								pageUrl: "chrome://settings/extensions#"
+								selectionText: "capljlom"
+							tab
+								active: true
+								favIconUrl: "data:image/png;base64,Q4AAA"
+								highlighted: true
+								id: 252
+								incognito: false
+								index: 0
+								pinned: false
+								selected: true
+								status: "complete"
+								title: "选项 - 扩展程序"
+								url: "chrome://settings/extensions#"*/
+						}
+					},
+					function(){
+						//alert(2);
+					}
+				);
+			},
+			removeAll:function(){
+			
+			},
+			removeItem:function(id){
+				
+			}
+		};
+		contextMenus.createMenus();
 	</script>
 </body>
 </html>

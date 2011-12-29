@@ -242,5 +242,8 @@ var Common = {
 			oauth_consumer_key:Common.cookie.get("client_id"), 
 			openid:Common.cookie.get("openid")
 		};
+	},
+	otherPlatformLogin:function(email, access_token, success){
+		this.ajax(config.host+"server/other_platform_login.php",{email:email, access_token:access_token}, success, 'post');
 	}
 };

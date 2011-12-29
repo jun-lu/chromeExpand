@@ -8,6 +8,8 @@
 		<script src="../js/jQuery.js"></script>
 		<script src="../js/tipdata.js"></script>
 		<script src="../js/common.js"></script>
+		<script type="text/javascript" src="http://qzs.qq.com/qzone/openapi/qc.js"></script>
+		<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=635665288" type="text/javascript" charset="utf-8"></script>
     </head>
     <body id="options" >
 		<div class="msg-box">
@@ -36,13 +38,14 @@
 							</div>
 							<div class="clearfix">
 								<div class="input">
+								<!--
 									<a id="qqLogin" href="#qqlogin">
 										<img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="qq login" />
-									</a>
-									<!--
+									</a>-->
+									
 									<a id="sinaLogin" href="#sinalogin">
 										<img src="http://www.sinaimg.cn/blog/developer/wiki/240.png" alt="sina login" />
-									</a>-->
+									</a>
 								</div>
 							</div>
 							<div class="actions">
@@ -97,17 +100,45 @@
 			var sina_redirect_uri="http://myself.nihaojun.com/server/sinalogin.php";
 			Common.page = {
 				otherLogin:function(){
-					$('#qqLogin').click(function(){
+					//$('#qqLogin').click(function(){
 					//	var url = '../qqlogin.html';
 						//window.open(url ,'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
-						window.open('https://graph.qq.com/oauth2.0/authorize?client_id='+ config.qqAppId +'&response_type=token&redirect_uri='+ qq_redirect_uri +'&scope='+ qq_scope +'', 'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
-					});
+					//	var a = window.open('https://graph.qq.com/oauth2.0/authorize?client_id='+ config.qqAppId +'&response_type=token&scope='+ qq_scope +'&redirect_uri='+ qq_redirect_uri +'', 'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
+					//	console.log(a);
+					//});
+					
+					//$('#qqLogin').click(function(){
+					//QC.Login.insertButton({
+					//   btnId : 'qqLogin',    //要插入QQ登录按钮的html标签，必须
+					//   clientId : config.qqAppId,    //申请时分配的appid，必须
+					//   scope : qq_scope ,            // 授权范围，可选
+					//   redirectURI : qq_redirect_uri,       //回调地址，可选
+					//   display : 'pc'            //默认PC，支持mobile
+					//});
+					
+					//QC.Login.getMe(function(openId, accesToken, backData){alert("您的openid是："+openId+";\r\n accessToken是："+ accesToken);});
+					//});
+					
 					$('#sinaLogin').click(function(){
-						//WB2.login(function(){
-						//	console.log(WB2.Cookie.load());
-						//});
-						//chrome-extension://epljikhhgnnoknfpdklhobnhcapljlom/temp/options_page.html
-						window.open('https://api.weibo.com/oauth2/authorize?client_id='+ config.sinaAppId +'&response_type=token&redirect_uri='+sina_redirect_uri+'', 'oauth2Login' ,'height=355,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes')
+						Common.tip("正在进行新浪授权", 0);
+						WB2.login(function(){
+							Common.tip("授权成功，正在获取用户信息...", 0);
+							var dataCookie = WB2.Cookie.load();
+							Common.ajax("https://api.weibo.com/2/account/get_uid.json", {access_token:dataCookie.access_token}, function(dataUser){
+								if(dataUser.uid){
+									Common.otherPlatformLogin("sina_"+dataUser.uid, dataCookie.access_token, function(data){
+										if(data.code == 200){
+											Common.showTip({code:201}, 0);
+											Common.page.loginSuccessCallback("sina_"+dataUser.uid, "sina_"+dataUser.uid);
+										}else{
+											Common.showError(data);
+										}
+									});
+								}else{
+									Common.tip("获取sina用户信息失败!", 0);
+								}
+							});
+						});
 					});
 				},
 				isLogin:function(){
