@@ -19,14 +19,18 @@
 	$mail = MD5($mail);
 	
 	if($word!="" || $des != ""){
+		
 		include "file.php";
+		include "common.php";
+		
 		$file = new File();
 		$folder = $mail;
 		$time = time();
 		
 		
 		if($file->is_dir($folder)){
-			$dataFile = strtotime(date("Y-m-d"));
+			//$dataFile = strtotime(date("Y-m-d"));
+			$dataFile = getTodayTime();
 			$filePath = $folder."/".$dataFile.".json";
 			$item = array("word"=>$word, "des"=>$des, "time"=>$time);
 			//if( is_writable($filePath) ){
@@ -34,20 +38,27 @@
 					
 					$data = json_decode($file->read($filePath));
 					array_push($data, $item);
-					$file->write($filePath, json_encode($data));
-					$result["code"] = 200;//
+					$code = $file->write($filePath, json_encode($data));
+					
+					//$result["code"] = 200;//
 				}else{
 					$data = array();
 					array_push($data, $item);
-					$file->write($filePath, json_encode($data));
-					$result["code"] = 200;//
+					$code = $file->write($filePath, json_encode($data));
+
+					//$result["code"] = 200;//
 				};
 				
 				//$result["code"] = 200;//
-				$result["result"] = array();
-				$result["result"]["word"] = $word;
-				$result["result"]["des"] = $des;
-				$result["result"]["time"] = $time;
+				if($code == true){
+					$result["code"] = 200;
+					$result["result"] = array();
+					$result["result"]["word"] = $word;
+					$result["result"]["des"] = $des;
+					$result["result"]["time"] = $time;
+				}else{
+					$result["code"] = 103;
+				}
 				
 			//}else{
 			//	$result["code"] = 407;//没有

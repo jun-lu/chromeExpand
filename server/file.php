@@ -37,18 +37,20 @@
 		
 		
 		public function write($file, $data){
+		
 			return file_put_contents($file, $data);
+			
 			// if( file_exists($file) ){
-				// if (!$handle = fopen($file, 'w')) {
+				// if (!$handle = fopen($file, 'w')) { //没有写入权限
 					 // return 2;
 					 // exit;
 				// }
-				// if (fwrite($handle, ($data)) === FALSE) {
+				// if (fwrite($handle, ($data)) === FALSE) {//写入错误
 					// return 3;
 					// exit;
 				// }
 				// fclose($handle);
-				// return 1;
+				// return 1; //成功
 			// }else{
 				// $cFile = fopen($file, 'w');
 				// $this->write($cFile, $data);

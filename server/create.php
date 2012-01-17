@@ -28,8 +28,8 @@
 				
 			// };
 		// }
-		var user = new UserSystem();
-		$result["code"] = user->createUser($email, $pwd);
+		$user = new UserSystem();
+		$result["code"] = $user->createUser($email, $pwd);
 		if($result["code"] == 200){
 			$result["result"] = array();
 			$result["result"]["md5"] = MD5($email);

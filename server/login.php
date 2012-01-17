@@ -6,7 +6,7 @@
 	//---上面是测试数据
 	$email = $_POST["email"];
 	$pwd = $_POST["pwd"];
-	
+
 	$result = array();
 	
 	if($email!="" && $pwd != ""){
@@ -36,5 +36,6 @@
 		SetCookie("mail", "", time()-1);
 		$result["code"] = -1;//输入错误
 	}
+	
 	echo json_encode($result); 
 ?>
