@@ -8,8 +8,6 @@
 		<script src="../js/jQuery.js"></script>
 		<script src="../js/tipdata.js"></script>
 		<script src="../js/common.js"></script>
-		
-		
     </head>
     <body id="options" >
 		<div class="msg-box">
@@ -27,7 +25,7 @@
 						   <div class="clearfix">
 								<label for="email" class="span2">Email</label>
 								<div class="input">
-								  <input class="span3" id="email" name="email" size="30" type="text" tabindex="1" placeholder="input the email or username"  > <a href="signup.html">Sign Up</a>
+								  <input class="span3" id="email" name="email" size="30" type="text" tabindex="1" placeholder="User name"  > <a href="signup.html">Sign Up</a>
 								</div>
 							</div>
 							<div class="clearfix">
@@ -36,12 +34,25 @@
 								  <input class="span3" id="PWD" name="PWD" size="30" type="password" tabindex="2"  >
 								</div>
 							</div>
+							<div class="clearfix">
+								<div class="input">
+									<a id="qqLogin" href="#qqlogin">
+										<img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="qq login" />
+									</a>
+									<!--
+									<a id="sinaLogin" href="#sinalogin">
+										<img src="http://www.sinaimg.cn/blog/developer/wiki/240.png" alt="sina login" />
+									</a>-->
+								</div>
+							</div>
 							<div class="actions">
 									<input type="submit" class="btn primary" value="Login" id="loginBtn" tabindex="3"  ><br/><br/>
+									
 									<ol>
 										<li>您可以先<a href="signup.html">注册</a>一个账户，然后在进行登录！</li>
 										<li>如果登录失效必须重新登录。</li>
 									</ol>
+									
 							</div>
 							
 						</fieldset>
@@ -80,11 +91,29 @@
         </div>
 		
 		<script>
-			
+			//var qq_redirect_uri = "http://192.168.1.101:9030/server/time.php";
+			var qq_redirect_uri = "http://myself.nihaojun.com/server/qqloginxd.php";
+			var qq_scope = "get_info";
+			var sina_redirect_uri="http://myself.nihaojun.com/server/sinalogin.php";
 			Common.page = {
+				otherLogin:function(){
+					$('#qqLogin').click(function(){
+					//	var url = '../qqlogin.html';
+						//window.open(url ,'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
+						window.open('https://graph.qq.com/oauth2.0/authorize?client_id='+ config.qqAppId +'&response_type=token&redirect_uri='+ qq_redirect_uri +'&scope='+ qq_scope +'', 'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
+					});
+					$('#sinaLogin').click(function(){
+						//WB2.login(function(){
+						//	console.log(WB2.Cookie.load());
+						//});
+						//chrome-extension://epljikhhgnnoknfpdklhobnhcapljlom/temp/options_page.html
+						window.open('https://api.weibo.com/oauth2/authorize?client_id='+ config.sinaAppId +'&response_type=token&redirect_uri='+sina_redirect_uri+'', 'oauth2Login' ,'height=355,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes')
+					});
+				},
 				isLogin:function(){
 					//return Common.cookie.get("mail") && ;
-					return Common.getItem("mail") && Common.getItem("pwd");
+					//return Common.getItem("mail") && Common.getItem("pwd");
+					return Common.cookie.get("mail");
 				},
 				login:function(){
 					$('#loadingWrap').removeClass("hide");
@@ -96,10 +125,12 @@
 					$('#loading').removeClass("hide");
 					$('#email2').val(email);
 				},
-				loginOut:function(email){
-					$('#loadingWrap').addClass("hide");
-					$('#loading').removeClass("hide");
-					$('#email2').val(email);
+				loginSuccessCallback:function(email, nickname){
+					Common.page.loginOut(nickname);
+					Common.getBackground().UserData = [];
+					Common.setItem("mail", email);
+					Common.setItem("nickname", nickname);
+					Common.cookie.set("mail", email, {expires:new Date((new Date().getTime()+ 1000 * 60 * 60 * 24 * 7 ))});//有消息+7天
 				}
 			};
 			$('#loadingform').submit(function(){
@@ -111,10 +142,11 @@
 					$('#loginBtn').attr("disabled", false);
 					if(data.code == 200){
 						Common.showTip({code:201}, 0);
-						Common.page.loginOut(email);
-						Common.getBackground().UserData = [];
-						Common.setItem("mail", email);
-						Common.setItem("pwd", PWD);
+						Common.page.loginSuccessCallback(email, email);
+						//Common.page.loginOut(email);
+					//	Common.getBackground().UserData = [];
+						//Common.setItem("mail", email);
+						//Common.cookie.set("mail", email, {expires:new Date((new Date().getTime()+ 1000 * 60 * 60 * 24 * 7 ))});//有消息+7天
 					}else{
 						$('#PWD').val("").focus();
 					}
@@ -129,6 +161,8 @@
 				});
 				Common.page.login();
 				Common.removeItem("pwd");
+				Common.cookie.del("mail");
+				Common.cookie.del("openid");
 				Common.getBackground().UserData = [];
 				return false;
 			});
@@ -143,6 +177,19 @@
 			}else{
 				$('#email').val(Common.getItem("mail"));
 			};
+			
+			Common.page.otherLogin();//其他方式登录
+			
+			var qqData = Common.qqApiParameter();//qq 登录
+			if(qqData.openid){
+				Common.post(config.host+"server/qqlogin.php", {email:qqData.openid, access_token:qqData.accessToken}, function(data){
+					if(data.code == 200){
+						Common.showTip({code:201}, 0);
+						Common.page.loginSuccessCallback(qqData.openid, Common.cookie.get("nickname"));
+					}
+				});
+			}
+			
 		</script>
 </body>
 </html>

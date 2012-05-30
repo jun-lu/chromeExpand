@@ -8,7 +8,7 @@
 				"popup":"index.html",
 				"default_title":"For myself"
 	},
-	"permissions":["cookies","tabs","http://*/*"],
+	"permissions":["cookies","tabs","http://*/*","https://*/*"],
 	"options_page":"temp/options_page.html",
 	"icon":{
 		"16":"icon16.png",
